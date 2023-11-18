@@ -13,7 +13,24 @@ class FollowUnfollows extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('follows', function (Blueprint $table) {
+            $table->primary('id');
+            $table->foreignId('follower_user_id');
+            $table->foreignId('following_user_id');
+            $table->timestamps();
+
+            $table->foreign('follower_user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('following_user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });
     }
 
     /**
@@ -23,6 +40,6 @@ class FollowUnfollows extends Migration
      */
     public function down()
     {
-        //
+          Schema::dropIfExists('follows');
     }
 }
