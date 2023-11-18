@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\LoginController;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 // api/v1
-Route::group(['prefix' => 'v1'], function () {
-    Route::POST("login", [LoginController::class, 'login']);
+Route::group(['prefix' => 'v1','middleware'=>['api','refresh_token']], function () {
+      // authorization routes
+      Route::controller(AuthController::class)->group(function () {
+        Route::POST('auth/login',  'login')->WithoutMiddleware(['refresh_token']);
+    });
+
 });
