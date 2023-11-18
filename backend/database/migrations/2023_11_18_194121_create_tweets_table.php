@@ -19,7 +19,6 @@ class CreateTweetsTable extends Migration
                     ->constrained()
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-            $table->string('title')->nullable(false);
             $table->text('body')->nullable;
             $table->timestamps();
         });
