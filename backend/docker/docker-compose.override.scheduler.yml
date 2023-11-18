@@ -1,0 +1,20 @@
+version: '3.3'
+
+networks:
+  tech-care:
+    external: true
+
+services:
+
+  scheduler:
+    image: ${COMPOSE_PROJECT_NAME}:${BUILD_MODE}
+    env_file:
+      - .envs/php-ini.env
+      - .envs/app.env
+      - .envs/scheduler.env
+    tty: true
+    command: ["run-scheduler.sh"]
+    networks:
+      - tech-care
+    volumes:
+      - ${PWD}/..:/var/www/html

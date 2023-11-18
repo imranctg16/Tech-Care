@@ -1,0 +1,4 @@
+
+networks:
+  tech-care:
+    external: true
