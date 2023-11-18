@@ -1,5 +1,4 @@
-<?php
-
+c
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +12,7 @@ class Tweet extends Model
         'user_id',
         'body',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
