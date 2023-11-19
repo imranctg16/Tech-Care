@@ -1,5 +1,6 @@
 <?php
-namespace App\Models;
+namespace App\Repositories;
+use App\Models\Tweet;
 
 class TweetRepository
 {
@@ -12,7 +13,7 @@ class TweetRepository
      * store method 
      *
      * @param array $data
-     * @return model
+     * @return 
      */
     public function store($data)
     {

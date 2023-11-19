@@ -15,6 +15,6 @@ services:
     tty: true
     command: ["run-scheduler.sh"]
     networks:
-      - tech-care
+      - common-net
     volumes:
       - ${PWD}/..:/var/www/html

@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Repositories;
 
 class LikeRepository {
     public function __construct(){

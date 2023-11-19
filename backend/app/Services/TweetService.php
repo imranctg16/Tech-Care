@@ -1,6 +1,7 @@
 <?php
-namespace App\Models;
+namespace App\Services;
 
+use App\Repositories\TweetRepository;
 use App\Services\ApiBaseService;
 use Exception;
 use Log;

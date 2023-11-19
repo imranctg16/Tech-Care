@@ -1,7 +1,7 @@
 version: '3.3'
 
 networks:
-  tech-care:
+  common-net:
     external: true
 
 services:
@@ -25,6 +25,6 @@ services:
     restart: unless-stopped
     tty: true
     networks:
-        tech-care:
+        common-net:
             aliases:
                 - backend-service-php

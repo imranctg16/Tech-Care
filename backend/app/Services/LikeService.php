@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Services;
 use App\Services\ApiBaseService;
 
 class LikeService extends ApiBaseService  {

@@ -14,7 +14,7 @@ class FollowUnfollows extends Migration
     public function up()
     {
         Schema::create('follows', function (Blueprint $table) {
-            $table->primary('id');
+            $table->id();
             $table->foreignId('follower_user_id');
             $table->foreignId('following_user_id');
             $table->timestamps();
