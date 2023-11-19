@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\API\V1\AuthController;
-use App\Http\Controllers\API\V1\LoginController;
+use App\Http\Controllers\API\V1\LikeController;
 use App\Http\Controllers\API\V1\TweetController;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,13 +23,19 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'refresh_token']], funct
   Route::controller(AuthController::class)->group(function () {
     Route::POST('auth/login', 'login')->WithoutMiddleware(['refresh_token']);
   });
+  // user routes 
+  Route::controller(UserController::class)->group(function () {
+    Route::GET('user/follows/{userId}/{isFollow}', 'follow');
+
+  });
   // tweet routes 
   Route::controller(TweetController::class)->group(function () {
     Route::POST('tweets', 'store');
   });
-  
-
-
+  // like routes 
+  Route::controller(LikeController::class)->group(function () {
+    Route::POST('likes', 'store');
+  });
 
 
 });
