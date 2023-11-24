@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
+        User::query()->delete();
         foreach($this->getUserList() as $user)
         {
             User::create($user);

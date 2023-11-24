@@ -4,7 +4,7 @@ use App\Models\FollowUnfollow;
 class FollowRepository {
 
     public function store($followerId,$followingId){
-        return FollowUnfollow::create([
+         FollowUnfollow::create([
             'follower_user_id'=>$followerId,
             'following_user_id'=>$followingId
         ]);

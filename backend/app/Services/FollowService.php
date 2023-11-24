@@ -23,10 +23,11 @@ class FollowService extends ApiBaseService
     {
         try {
             if ($isFollow) {
-                $this->repository->store($followerUserId, $followingUserId);
+                 $model = $this->repository->store($followerUserId, $followingUserId);
+                 return $this->sendSuccessResponse($model, 'Data Saved Successfully');
             }
-            $this->repository->delete($followerUserId, $followingUserId);
-            return $this->sendSuccessResponse([], 'Data Saved Successfully');
+            $model = $this->repository->delete($followerUserId, $followingUserId);
+            return $this->sendSuccessResponse($model, 'Data Deleted Successfully');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             Log::error($exception->getTraceAsString());
