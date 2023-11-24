@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "66d9d500-2ad5-47f0-a592-11bd95d380e5",
+		"name": "Twitter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2526412",
+		"_collection_link": "https://dwe-gp.postman.co/workspace/Dynamic-Workflow-Engine~769c2b56-7353-4ed0-94da-df7bbbad2354/collection/2526412-66d9d500-2ad5-47f0-a592-11bd95d380e5?action=share&source=collection_link&creator=2526412"
+	},
+	"item": [
+		{
+			"name": "Tweet",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{global_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":1,\n    \"body\":\"Test Tweet\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/tweets",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tweets"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.access_token);",
+									"pm.globals.set('global_token',jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"host": true,
+							"user-agent": true,
+							"accept": true,
+							"connection": true,
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"tech_care1@example.com\",\n    \"password\":\"Test@135\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/auth/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Follow Unfollow",
+			"item": [
+				{
+					"name": "store",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{global_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/user/follows/1/true",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user",
+								"follows",
+								"1",
+								"true"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Likes",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{global_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":1,\n    \"tweet_id\":1,\n    \"liked\":false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/likes",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"likes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

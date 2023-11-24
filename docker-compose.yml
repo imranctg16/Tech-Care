@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  laravel-app:
+    build:
+      context: ./backend 
+      dockerfile: Dockerfile
+    ports:
+      - "9009:8076"
+    volumes:
+      - ./backend:/var/www/html  # Mount the Laravel project directory as a volume
+    networks:
+      - tech-care
+
+  vue-app:
+    build:
+      context: ./frontend 
+      dockerfile: Dockerfile
+    ports:
+      - "9010:8080"
+    depends_on:
+      - laravel-app
+    volumes:
+      - ./frontend:/app 
+    networks:
+      - tech-care
+
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "33069:3306"  
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: twitter
+    networks:
+      - tech-care
+    volumes:
+    - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+
+networks:
+   tech-care:
