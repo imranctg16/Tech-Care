@@ -4,8 +4,35 @@
     
     </nav>
     <router-view />
+
+    <notification
+      v-for="(notification,i) in getActiveNotifications"
+      :key="i"
+      :index="i"
+      :data="notification"
+    />
   </div>
 </template>
+
+<script>
+import Notification from '@/components/Notification'
+
+export default {
+  components: {
+    Notification
+  },
+  data() {
+    return {
+      globalNotification: false
+    }
+  },
+  computed: {
+    
+  }
+}
+</script>
+
+
 
 <style>
 #app {

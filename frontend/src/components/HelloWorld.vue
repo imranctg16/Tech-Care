@@ -6,43 +6,48 @@
     <div class="login-header">
       <h2>Log in to Twitter</h2>
     </div>
-    <div class="login-form">
-      <div class="login-form-item">
-        <label for="username"></label>
-        <input
-          id="username"
-          v-model="userInfo.email"
-          type="text"
-          placeholder="email"
-          required
-          autocomplete="off"
-        />
+    <form @submit.prevent="login()">
+      <div class="login-form">
+        <div class="login-form-item">
+          <label for="username"></label>
+          <input
+            id="username"
+            v-model="form.email"
+            type="text"
+            placeholder="email"
+            required
+            autocomplete="off"
+          />
+        </div>
+        <div class="login-form-item">
+          <label for="password"></label>
+          <input
+            id="password"
+            v-model="form.password"
+            placeholder="Password"
+            type="password"
+            required
+            autocomplete="off"
+          />
+        </div>
+        <div class="login-submit" @click="login">Log in</div>
+        <!-- <button type="submit" class="login-submit">Login</button> -->
+        <div class="login-footer">
+          <p>
+            <span>Forgot password?</span>
+            <span class="dot">&#183;</span>
+            <span>Sign up for Twitter</span>
+          </p>
+        </div>
       </div>
-      <div class="login-form-item">
-        <label for="password"></label>
-        <input
-          id="password"
-          v-model="userInfo.password"
-          placeholder="Password"
-          type="password"
-          required
-          autocomplete="off"
-        />
-      </div>
-      <div class="login-submit" @click="login">Log in</div>
-      <div class="login-footer">
-        <p>
-          <span>Forgot password?</span>
-          <span class="dot">&#183;</span>
-          <span>Sign up for Twitter</span>
-        </p>
-      </div>
-    </div>
+    </form>
   </div>
 </template>
 
 <script>
 import BaseIcon from "@/components/BaseIcon";
+import ApiService from "@/services/api.service";
+import JwtService from "@/services/jwt.service";
 export default {
   name: "LoginView",
   components: {
@@ -50,18 +55,31 @@ export default {
   },
   data: function () {
     return {
-      userInfo: {
-        username: "",
-        password: "",
+      form: {
+        email: "tech_care1@example.com",
+        password: "Test@135",
       },
-    
-      textColor: '#1DA1F2'
+      textColor: "#1DA1F2",
     };
   },
   methods: {
-    login(){
-
-    }
+    login() {
+      ApiService.post(`${ApiService.TwitterService()}auth/login`, this.form)
+        .then((res) => {
+          if (res.data.status_code === 422) {
+            this.errors = res.data.data;
+          } else {
+            JwtService.saveToken(res.data.access_token);
+            console.log("success");
+            return this.$router.push("/feed");
+          }
+        })
+        .catch((errors) => {
+          this.errors = [];
+          console.log(errors);
+          // NotificationService.error(errors.response.data.message);
+        });
+    },
   },
 };
 </script>
@@ -85,7 +103,7 @@ export default {
     h2 {
       font-size: 2rem;
       font-weight: black;
-      color: #1DA1F2;
+      color: #1da1f2;
     }
   }
   &-form {
@@ -103,7 +121,7 @@ export default {
         width: 100%;
         font-size: 1.2rem;
         background-color: transparent;
-        color: #000000;
+        color: #fff;
         font-weight: bold;
         padding: 0.8rem 4px;
         border: 1px solid rgba($color: $color-dark-gray, $alpha: 0.3);
@@ -122,7 +140,7 @@ export default {
         position: absolute;
         left: 5px;
         top: 50%;
-        color: #1DA1F2;
+        color: #1da1f2;
         transform: translate(0, -50%);
         transition: 200ms ease;
         user-select: none;
